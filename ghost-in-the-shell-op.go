@@ -26,8 +26,8 @@ var frame_count int = 0
 const DURATION = 70
 
 // threshold
-const DB_TH  = 10
-const DT_TH  = 20
+const DRAWBKGD_TH  = 10
+const DRAWTITLE_TH  = 20
 const DEC_TH = 50
 
 func draw() {
@@ -45,11 +45,11 @@ func draw_subtitle(name string) {
 	name_len := len(name)
 	pos_y := h / 2 - 1
 
-	if frame_count < DB_TH {
+	if frame_count < DRAWBKGD_TH {
 		return
 	}
 
-	if frame_count < DT_TH {
+	if frame_count < DRAWTITLE_TH {
 		for _, char := range name {
 			rand_x := rand.Intn(w)
 			termbox.SetCell(rand_x, pos_y, char, termbox.ColorGreen, termbox.ColorDefault)
@@ -66,11 +66,11 @@ func draw_title(name string) {
 	name_len := len(name)
 	pos_y := h / 2
 
-	if frame_count < DB_TH {
+	if frame_count < DRAWBKGD_TH {
 		return
 	}
 
-	if frame_count < DT_TH {
+	if frame_count < DRAWTITLE_TH {
 		for _, char := range name {
 			rand_x := rand.Intn(w)
 			termbox.SetCell(rand_x, pos_y, char, termbox.ColorGreen, termbox.ColorDefault)
@@ -84,7 +84,7 @@ func draw_title(name string) {
 }
 
 func draw_background() {
-	if len(positions) != 0 && frame_count > DB_TH {
+	if len(positions) != 0 && frame_count > DRAWBKGD_TH {
 		shuffle(positions)
 		positions = decrease_cells(positions)
 	}
@@ -110,14 +110,14 @@ func init_positions() {
 
 func decrease_cells(data []Position) (result []Position) {
 	n := 0
-	half_size := len(data) / 5 * 3
+	size := len(data) / 5 * 3
 
-	if half_size < DEC_TH {
+	if size < DEC_TH {
 		return result
 	}
 
 	for _, value := range data {
-		if n > half_size {
+		if n > size {
 			break
 		}
 		result = append(result, value)
