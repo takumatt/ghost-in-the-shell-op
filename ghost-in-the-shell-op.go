@@ -90,8 +90,14 @@ func draw_background() {
 	}
 	
 	for _, position := range positions {
-		cell_num := rand.Intn(10)
-		cell_char := rune(cell_num) + '0'
+		// The digits 0 through 9 are denoted by ASCII code points 48 through 57; 0 is 48, 1 is 49...
+		// The same code is used by UTF-8 (for backwards compatibility), the default encoding used by Go.
+		// The function termbox.SetCell() takes the 'rune' of a character to be placed in a given cell.
+		// Rune is Go-lingo for 'Code Point'.
+		// The following line adds a random integer from the range [0, 10) and to 48 (the code point for 0),
+		// essentially giving us a random number in the range [48, 57], a code points for a random digit.
+		// rune() is then called for type-coercion to change the random code point from type int to type rune
+		cell_char := rune(48 + rand.Intn(10))
 		
  		// SetCell(x, y, Character, ForegroundColor, BackgroundColor)		
 		termbox.SetCell(position.x, position.y, cell_char, termbox.ColorGreen, termbox.ColorDefault)
