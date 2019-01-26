@@ -88,12 +88,12 @@ func draw_background() {
 		shuffle(positions)
 		positions = decrease_cells(positions)
 	}
-	
+
 	for _, position := range positions {
 		cell_num := rand.Intn(10)
 		cell_char := rune(cell_num) + '0'
-		
- 		// SetCell(x, y, Character, ForegroundColor, BackgroundColor)		
+
+		// SetCell(x, y, Character, ForegroundColor, BackgroundColor)		
 		termbox.SetCell(position.x, position.y, cell_char, termbox.ColorGreen, termbox.ColorDefault)
 	}
 }
@@ -110,7 +110,7 @@ func init_positions() {
 
 func decrease_cells(data []Position) (result []Position) {
 	n := 0
-	size := len(data) / 5 * 3
+	size := len(data) * 60 / 100 // decrease data size to 60% of it's initial size
 
 	if size < DEC_TH {
 		return result
@@ -123,7 +123,7 @@ func decrease_cells(data []Position) (result []Position) {
 		result = append(result, value)
 		n++
 	}
-	
+
 	return result
 }
 
